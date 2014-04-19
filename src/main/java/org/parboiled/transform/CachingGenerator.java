@@ -37,7 +37,7 @@ import static org.parboiled.common.Utils.toObjectArray;
 /**
  * Wraps the method code with caching and proxying constructs.
  */
-class CachingGenerator implements RuleMethodProcessor {
+public class CachingGenerator implements RuleMethodProcessor {
 
     private ParserClassNode classNode;
     private RuleMethod method;
