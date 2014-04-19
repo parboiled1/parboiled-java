@@ -87,7 +87,7 @@ class ClassNodeInitializer extends ClassVisitor {
             Checks.ensure((access & ACC_PRIVATE) == 0, "Parser class '%s' must not be private", name);
             Checks.ensure((access & ACC_FINAL) == 0, "Parser class '%s' must not be final.", name);
             classNode.visit(
-                    V1_5,
+                    V1_6,
                     ACC_PUBLIC,
                     getExtendedParserClassName(name),
                     null,
