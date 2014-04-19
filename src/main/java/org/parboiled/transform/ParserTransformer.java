@@ -16,12 +16,15 @@
 
 package org.parboiled.transform;
 
-import static org.parboiled.common.Preconditions.*;
 import org.objectweb.asm.ClassWriter;
 import org.parboiled.common.ImmutableList;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
+import static org.parboiled.common.Preconditions.*;
 import static org.parboiled.transform.AsmUtils.*;
 
 public class ParserTransformer {
@@ -102,6 +105,27 @@ public class ParserTransformer {
                 classNode.getClassCode(),
                 classNode.getParentClass().getClassLoader()
         ));
+//        try {
+//            writeNode(classNode);
+//        } catch (IOException e) {
+//            throw new IllegalStateException(e);
+//        }
     }
 
+    private static void writeNode(final ParserClassNode classNode)
+        throws IOException
+    {
+        final File file = new File("/tmp/parser", classNode.name);
+
+        if (!file.getParentFile().mkdirs())
+            throw new IOException();
+
+        final FileOutputStream out = new FileOutputStream(file);
+        try {
+            out.write(classNode.getClassCode());
+            out.flush();
+        } finally {
+            out.close();
+        }
+    }
 }
