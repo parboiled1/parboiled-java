@@ -1,6 +1,5 @@
 package repro.abc;
 
-import org.parboiled.Parboiled;
 import org.parboiled.common.Formatter;
 import org.parboiled.common.StringUtils;
 import org.parboiled.parserunners.RecoveringParseRunner;
@@ -11,14 +10,16 @@ import org.parboiled.trees.GraphUtils;
 
 import java.util.Scanner;
 
-import static org.parboiled.errors.ErrorUtils.printParseErrors;
-import static org.parboiled.support.ParseTreeUtils.printNodeTree;
+import static org.parboiled.errors.ErrorUtils.*;
+import static org.parboiled.support.ParseTreeUtils.*;
 
 public class ParserTest {
 
     @SuppressWarnings("unchecked")
     public static void main(String[] args) {
-        repro.abc.Parser parser = Parboiled.createParser(repro.abc.Parser.class);
+        //repro.abc.Parser parser = Parboiled.createParser(repro.abc.Parser.class);
+        repro.abc.Parser parser = new Parser$$parboiled();
+
         Boolean done = false;
 
         while (!done) {
