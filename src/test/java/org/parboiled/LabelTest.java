@@ -23,8 +23,10 @@ import org.parboiled.support.ToStringFormatter;
 import org.parboiled.test.TestNgParboiledTest;
 import org.testng.annotations.Test;
 
-import static org.parboiled.trees.GraphUtils.countAllDistinct;
-import static org.parboiled.trees.GraphUtils.printTree;
+import java.io.File;
+import java.nio.charset.Charset;
+
+import static org.parboiled.trees.GraphUtils.*;
 
 public class LabelTest extends TestNgParboiledTest<Object> {
 
@@ -125,4 +127,9 @@ public class LabelTest extends TestNgParboiledTest<Object> {
                         "      ['a'] 'a'\n");
     }
 
+    public static void main(final String... args)
+    {
+        Parboiled.dumpParserSource(LabellingParser.class,
+            new File("/tmp/prout"), Charset.forName("UTF-8"));
+    }
 }
