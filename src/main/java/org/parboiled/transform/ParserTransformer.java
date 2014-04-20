@@ -16,12 +16,12 @@
 
 package org.parboiled.transform;
 
-import static org.parboiled.common.Preconditions.*;
 import org.objectweb.asm.ClassWriter;
 import org.parboiled.common.ImmutableList;
 
 import java.util.List;
 
+import static org.parboiled.common.Preconditions.*;
 import static org.parboiled.transform.AsmUtils.*;
 
 public class ParserTransformer {
@@ -37,6 +37,25 @@ public class ParserTransformer {
         );
         return (Class<? extends T>)
                 (extendedClass != null ? extendedClass : extendParserClass(parserClass).getExtendedClass());
+    }
+
+    /**
+     * Dump the bytecode of a transformed parser class
+     *
+     * <p>This method will run all bytecode transformations on the parser class
+     * then return a dump of the bytecode as a byte array.</p>
+     *
+     * @param parserClass the parser class
+     * @return a bytecode dump
+     * @throws Exception FIXME
+     *
+     * @see #extendParserClass(Class)
+     */
+    public static byte[] getByteCode(final Class<?> parserClass)
+        throws Exception
+    {
+        final ParserClassNode node = extendParserClass(parserClass);
+        return node.getClassCode();
     }
 
     static ParserClassNode extendParserClass(Class<?> parserClass) throws Exception {
