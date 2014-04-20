@@ -16,12 +16,12 @@
 
 package org.parboiled;
 
-import static org.parboiled.common.Preconditions.*;
 import org.parboiled.transform.ParserTransformer;
 
 import java.lang.reflect.Constructor;
 
-import static org.parboiled.common.Utils.findConstructor;
+import static org.parboiled.common.Preconditions.*;
+import static org.parboiled.common.Utils.*;
 
 /**
  * Main class providing the high-level entry point into the parboiled library.
@@ -59,4 +59,29 @@ public class Parboiled {
         }
     }
 
+    /**
+     * Generate the byte code of a transformed parser class
+     *
+     * <p>When you create a parser using {@link
+     * #createParser(Class, Object...)}, Parboiled generates a new class which
+     * is the one you actually use for parsing. This method allows to get the
+     * byte code of such a generated class in a byte array.</p>
+     *
+     * @param parserClass the parser class
+     * @param <P> class of the parser
+     * @param <V> see {@link BaseParser}
+     * @return the byte code
+     * @throws RuntimeException byte code generation failure
+     *
+     * @see ParserTransformer#getByteCode(Class)
+     */
+    public static <P extends BaseParser<V>, V> byte[] getByteCode(
+        final Class<P> parserClass)
+    {
+        try {
+            return ParserTransformer.getByteCode(parserClass);
+        } catch (Exception e) {
+            throw new RuntimeException("failed to generate byte code", e);
+        }
+    }
 }
