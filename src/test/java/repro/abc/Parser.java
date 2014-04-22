@@ -8,14 +8,7 @@ import org.parboiled.annotations.BuildParseTree;
 public class Parser extends BaseParser<Object> {
 
     public Rule InputLine() {
-        return Sequence(R29(), EOI);
-    }
-
-    public Rule R29() {
-        return Sequence(
-            R31(),
-            R48()
-        );
+        return Sequence(R31(), EOI);
     }
 
     @SuppressWarnings("InfiniteRecursion")
@@ -45,11 +38,7 @@ public class Parser extends BaseParser<Object> {
     }
 
     public Rule R35() {
-        return R29();
-    }
-
-    public Rule R48() {
-        return Ch(')');
+        return R31();
     }
 }
 
