@@ -9,25 +9,12 @@ public class Parser extends BaseParser<Object> {
 
     public Rule InputLine() {
         return Sequence(
-            R01(),
+            R23(),
             EOI);
-    }
-
-    public Rule R01() {
-        return Sequence(
-            R02(),
-            EOI);
-    }
-
-    public Rule R02() {
-        return R22();
     }
 
     public Rule R22() {
-        return Sequence(
-            R53(),
-            R23()
-        );
+        return R23();
     }
 
     public Rule R23() {
@@ -59,7 +46,7 @@ public class Parser extends BaseParser<Object> {
                 R52(),
                 R60()
             ),
-            R41()
+            R67()
         );
     }
 
@@ -98,7 +85,7 @@ public class Parser extends BaseParser<Object> {
     }
 
     public Rule R35() {
-        return R02();
+        return R23();
     }
 
     public Rule R39() {
@@ -109,14 +96,10 @@ public class Parser extends BaseParser<Object> {
         return FirstOf(
             Sequence(
                 R46(),
-                OneOrMore(R66()),
+                OneOrMore(R45()),
                 R46()
             ),
-            OneOrMore(R65()));
-    }
-
-    public Rule R41() {
-        return R65();
+            OneOrMore(R67()));
     }
 
     public Rule R45() {
@@ -173,16 +156,6 @@ public class Parser extends BaseParser<Object> {
 
     public Rule R63() {
         return AnyOf("\n\r");
-    }
-
-    public Rule R65() {
-        return R67();
-    }
-
-    public Rule R66() {
-        return FirstOf(
-            R67(),
-            R45());
     }
 
     public Rule R67() {
