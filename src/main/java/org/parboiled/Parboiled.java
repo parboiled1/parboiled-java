@@ -28,15 +28,16 @@ import com.strobel.decompiler.ITextOutput;
 import com.strobel.decompiler.PlainTextOutput;
 import org.parboiled.transform.ParserTransformer;
 
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.lang.reflect.Constructor;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 
 import static org.parboiled.common.Preconditions.*;
 import static org.parboiled.common.Utils.*;
@@ -132,44 +133,34 @@ public class Parboiled {
      * @see Class#getCanonicalName()
      */
     public static <P extends BaseParser<V>, V> void dumpParserSource(
-        final Class<P> parserClass, final File baseDir, final Charset charset)
+        final Class<P> parserClass, final Path baseDir, final Charset charset)
     {
         checkArgNotNull(parserClass, "parser class must not be null");
         checkArgNotNull(baseDir, "base directory must not be null");
         checkArgNotNull(charset, "charset must not be null");
-        checkArgument(!baseDir.exists() || baseDir.isDirectory(),
-            "'%s': not a directory", baseDir);
+
 
         final String classname = parserClass.getCanonicalName()
             .replace(".", File.separator) + "$$parboiled.java";
 
-        final File dstfile = new File(baseDir, classname).getAbsoluteFile();
-        final File dir = dstfile.getParentFile();
-
-        checkArgument(dir.mkdirs(), "failed to create directory '%s'", dir);
-
-        OutputStream out = null;
-        OutputStreamWriter writer = null;
+        final Path dstfile = baseDir.resolve(classname);
 
         try {
-            out = new FileOutputStream(dstfile);
-            writer = new OutputStreamWriter(out, charset);
+            Files.createDirectories(dstfile.getParent());
+        } catch (IOException e) {
+            throw new RuntimeException("could not create directory", e);
+        }
+
+        try (
+            final BufferedWriter writer = Files.newBufferedWriter(dstfile,
+                StandardCharsets.UTF_8, StandardOpenOption.TRUNCATE_EXISTING,
+                StandardOpenOption.CREATE);
+        ) {
             dumpSource(parserClass, writer);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException("failed to open file " + dstfile, e);
+        } catch (RuntimeException e) {
+            throw e;
         } catch (Exception e) {
-            throw new RuntimeException("failed to dump source", e);
-        } finally {
-            try {
-                if (writer != null)
-                    writer.close();
-            } catch (IOException ignored) {
-            }
-            try {
-                if (out != null)
-                    out.close();
-            } catch (IOException ignored) {
-            }
+            throw new RuntimeException("could not dump source", e);
         }
     }
 
@@ -177,7 +168,7 @@ public class Parboiled {
      * Dump the source of a generated parser class using the system's default
      * charset
      *
-     * <p>This simply calls {@link #dumpParserSource(Class, File, Charset)} with
+     * <p>This simply calls {@link #dumpParserSource(Class, Path, Charset)} with
      * {@link Charset#defaultCharset()} as a charset.</p>
      *
      * @param parserClass the class to dump
@@ -186,7 +177,7 @@ public class Parboiled {
      * @param <V> see {@link BaseParser}
      */
     public static <P extends BaseParser<V>, V> void dumpParserSource(
-        final Class<P> parserClass, final File baseDir)
+        final Class<P> parserClass, final Path baseDir)
     {
         dumpParserSource(parserClass, baseDir, Charset.defaultCharset());
     }
