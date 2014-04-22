@@ -15,14 +15,12 @@ public class Parser extends BaseParser<Object> {
 
     public Rule R01() {
         return Sequence(
-            R60(),
             R02(),
             EOI);
     }
 
     public Rule R02() {
         return Sequence(
-            R56(),
             Optional(
                 R03()
             ),
@@ -169,7 +167,6 @@ public class Parser extends BaseParser<Object> {
     public Rule R31() {
         return Sequence(
             R31(),
-            R57(),
             R33()
         );
     }
@@ -303,20 +300,8 @@ public class Parser extends BaseParser<Object> {
         return R58("F");
     }
 
-    public Rule R54() {
-        return R58("I");
-    }
-
     public Rule R55() {
         return R58("P");
-    }
-
-    public Rule R56() {
-        return R58("S");
-    }
-
-    public Rule R57() {
-        return R58("U");
     }
 
     public Rule R58(String string) {
