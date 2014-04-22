@@ -57,38 +57,10 @@ public class Parser extends BaseParser<Object> {
     public Rule R06() {
         return FirstOf(
             R17(),
-            R07(),
-            R16(),
+            R14(),
+            R43(),
             R15()
         );
-    }
-
-    public Rule R07() {
-        return R08();
-    }
-
-    public Rule R08() {
-        return R09();
-    }
-
-    public Rule R09() {
-        return R10();
-    }
-
-    public Rule R10() {
-        return R11();
-    }
-
-    public Rule R11() {
-        return R12();
-    }
-
-    public Rule R12() {
-        return R13();
-    }
-
-    public Rule R13() {
-        return R14();
     }
 
     public Rule R14() {
@@ -108,30 +80,26 @@ public class Parser extends BaseParser<Object> {
 
     public Rule R15() {
         return Sequence(
-            R19(),
+            R49(),
             R60(),
             Sequence(
                 FirstOf(
                     R17(),
-                    R07(),
-                    R16()
+                    R14(),
+                    R43()
                 ),
                 ZeroOrMore(
                     R44(),
                     FirstOf(
                         R17(),
-                        R07(),
-                        R16()
+                        R14(),
+                        R43()
                     )
                 )
             ),
             R20(),
             R60()
         );
-    }
-
-    public Rule R16() {
-        return R43();
     }
 
     public Rule R17() {
@@ -147,11 +115,6 @@ public class Parser extends BaseParser<Object> {
             R24(),
             R41()
         );
-    }
-
-    public Rule R19() {
-        return R49();
-
     }
 
     public Rule R20() {
