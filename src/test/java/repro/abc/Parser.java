@@ -8,36 +8,11 @@ import org.parboiled.annotations.BuildParseTree;
 public class Parser extends BaseParser<Object> {
 
     public Rule InputLine() {
-        return Sequence(
-            R23(),
-            EOI);
-    }
-
-    public Rule R22() {
-        return R23();
+        return Sequence(R23(), EOI);
     }
 
     public Rule R23() {
-        return FirstOf(
-            Sequence(
-                R25(),
-                Optional(
-                    R26()
-                )),
-            Sequence(
-                R29(),
-                R26()
-            )
-        );
-    }
-
-    public Rule R25() {
-        return Sequence(
-            R39(),
-            R45(),
-            R40(),
-            R60()
-        );
+        return Sequence(R29(), R26());
     }
 
     public Rule R26() {
@@ -88,28 +63,6 @@ public class Parser extends BaseParser<Object> {
         return R23();
     }
 
-    public Rule R39() {
-        return R40();
-    }
-
-    public Rule R40() {
-        return FirstOf(
-            Sequence(
-                R46(),
-                OneOrMore(R45()),
-                R46()
-            ),
-            OneOrMore(R67()));
-    }
-
-    public Rule R45() {
-        return Ch('.');
-    }
-
-    public Rule R46() {
-        return Ch('\'');
-    }
-
     public Rule R47() {
         return Ch('(');
     }
@@ -122,36 +75,21 @@ public class Parser extends BaseParser<Object> {
         return R58("A2");
     }
 
-    public Rule R53() {
-        return R58("F");
-    }
-
     public Rule R58(String string) {
-        return Sequence(
-            IgnoreCase(string),
-            R60());
+        return Sequence(IgnoreCase(string), R60());
     }
 
     public Rule R60() {
-        return ZeroOrMore(
-            FirstOf(
-                R62(),
-                R61()));
+        return ZeroOrMore(FirstOf(R62(), R61())
+        );
     }
 
     public Rule R61() {
-        return FirstOf(
-            Ch(' '),
-            Ch('\t'),
-            Ch('\f'),
-            R63());
+        return FirstOf(Ch(' '), Ch('\t'), Ch('\f'), R63());
     }
 
     public Rule R62() {
-        return Sequence(
-            "/*",
-            ZeroOrMore(FirstOf(R61(), R67())),
-            "*/");
+        return Sequence("/*", ZeroOrMore(FirstOf(R61(), R67())), "*/");
     }
 
     public Rule R63() {
