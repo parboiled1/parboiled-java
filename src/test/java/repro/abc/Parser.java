@@ -6,30 +6,7 @@ import org.parboiled.annotations.BuildParseTree;
 
 @BuildParseTree
 public class Parser extends BaseParser<Object> {
-
-    public Rule InputLine() {
-        return Sequence(R31(), EOI);
-    }
-
-    @SuppressWarnings("InfiniteRecursion")
     public Rule R31() {
-        return Sequence(
-            R31(),
-            R33()
-        );
-    }
-
-    /* Alternative 1 */
-//    public Rule R32() {
-//        return R33();
-//    }
-
-    /* Alternative 2 */
-//    public Rule R32() {
-//        return R02();
-//    }
-
-    public Rule R33() {
         return R34();
     }
 

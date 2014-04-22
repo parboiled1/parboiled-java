@@ -9,6 +9,6 @@ public class ParserTest {
     public static void main(String[] args) {
         repro.abc.Parser parser = Parboiled.createParser(Parser.class);
 
-        new BasicParseRunner(parser.InputLine());
+        new BasicParseRunner(parser.R31());
     }
 }
