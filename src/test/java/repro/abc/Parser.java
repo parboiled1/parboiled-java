@@ -30,7 +30,7 @@ public class Parser extends BaseParser<Object> {
                 R04()
             ),
             R05(),
-            R21()
+            R22()
         );
     }
 
@@ -97,7 +97,7 @@ public class Parser extends BaseParser<Object> {
                     )
                 )
             ),
-            R20(),
+            R50(),
             R60()
         );
     }
@@ -112,17 +112,9 @@ public class Parser extends BaseParser<Object> {
 
     public Rule R18() {
         return FirstOf(
-            R24(),
+            R25(),
             R41()
         );
-    }
-
-    public Rule R20() {
-        return R50();
-    }
-
-    public Rule R21() {
-        return R22();
     }
 
     public Rule R22() {
@@ -135,19 +127,15 @@ public class Parser extends BaseParser<Object> {
     public Rule R23() {
         return FirstOf(
             Sequence(
-                R24(),
+                R25(),
                 Optional(
                     R26()
                 )),
             Sequence(
-                R27(),
+                R29(),
                 R26()
             )
         );
-    }
-
-    public Rule R24() {
-        return R25();
     }
 
     public Rule R25() {
@@ -167,14 +155,6 @@ public class Parser extends BaseParser<Object> {
             ),
             R41()
         );
-    }
-
-    public Rule R27() {
-        return R28();
-    }
-
-    public Rule R28() {
-        return R29();
     }
 
     public Rule R29() {
